@@ -29,7 +29,7 @@ async function pushComments(message) {
         return;
     }
     return await (0, utils_1.post)({
-        url: `${process.env.GITHUB_API_URL}/repos/${process.env.INPUT_REPOSITORY}/issues/${process.env.INPUT_PULL_REQUEST_NUMBER}/comments`,
+        url: `${process.env.GITHUB_API_URL}/repos/${process.env.INPUT_REPOSITORY}/pulls/${process.env.INPUT_PULL_REQUEST_NUMBER}/reviews`,
         body: { body: message },
         header: { 'Authorization': `token ${process.env.INPUT_TOKEN}` }
     });
