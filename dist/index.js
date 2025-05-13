@@ -136,6 +136,7 @@ async function aiCheckDiffContext() {
                     system: process.env.INPUT_REVIEW_PROMPT
                 });
                 if (!response.choices) { // noinspection ExceptionCaughtLocallyJS
+                    console.log(response);
                     throw "openai error";
                 }
                 let Review = useChinese ? "审核结果" : "Review";
