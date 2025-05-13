@@ -34,6 +34,7 @@ export function doesAnyPatternMatch(patterns: Array<string>, str: string) {
  * @param json is json res
  */
 export async function post({url, body, header, json}: any): Promise<string> {
+  console.log(url);
   return new Promise((resolve, reject) => {
     json = typeof json === "boolean" ? json : true;
     const data = typeof body === "string" ? body : JSON.stringify(body);
