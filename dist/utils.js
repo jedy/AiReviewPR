@@ -40,7 +40,6 @@ exports.doesAnyPatternMatch = doesAnyPatternMatch;
  * @param json is json res
  */
 async function post({ url, body, header, json }) {
-    console.log(url);
     return new Promise((resolve, reject) => {
         json = typeof json === "boolean" ? json : true;
         const data = typeof body === "string" ? body : JSON.stringify(body);
@@ -49,13 +48,11 @@ async function post({ url, body, header, json }) {
         header['Content-Type'] = header['Content-Type'] || 'application/json';
         header['Content-Length'] = Buffer.byteLength(data);
         const options = {
-            hostname: url_.hostname,
-            path: url_.pathname + (url_.search || ''),
             method: 'POST',
             headers: header
         };
         // noinspection DuplicatedCode
-        const req = (url_.protocol === "http:" ? http_1.default : https_1.default).request(options, (res) => {
+        const req = (url_.protocol === "http:" ? http_1.default : https_1.default).request(url_, options, (res) => {
             let responseBody = '';
             // 根据 Content-Type 头获取字符编码
             const contentType = res.headers['content-type'];

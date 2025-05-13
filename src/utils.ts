@@ -34,7 +34,6 @@ export function doesAnyPatternMatch(patterns: Array<string>, str: string) {
  * @param json is json res
  */
 export async function post({url, body, header, json}: any): Promise<string> {
-  console.log(url);
   return new Promise((resolve, reject) => {
     json = typeof json === "boolean" ? json : true;
     const data = typeof body === "string" ? body : JSON.stringify(body);
@@ -43,14 +42,12 @@ export async function post({url, body, header, json}: any): Promise<string> {
     header['Content-Type'] = header['Content-Type'] || 'application/json';
     header['Content-Length'] = Buffer.byteLength(data)
     const options = {
-      hostname: url_.hostname, // 确保去掉协议部分
-      path: url_.pathname + (url_.search || ''),
       method: 'POST',
       headers: header
     };
 
     // noinspection DuplicatedCode
-    const req = (url_.protocol === "http:" ? http : https).request(options, (res) => {
+    const req = (url_.protocol === "http:" ? http : https).request(url_, options, (res) => {
       let responseBody = '';
 
       // 根据 Content-Type 头获取字符编码
