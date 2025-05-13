@@ -15,11 +15,8 @@ inputs:
   PULL_REQUEST_NUMBER:
     description: 'github event pull_request number'
     default: ${{ github.event.pull_request.number }}
-  CHINESE:
-    description: 'use chines 作废'
-    default: ""
   LANGUAGE:
-    description: 'use chines'
+    description: 'use chinese'
     default: "Chinese"
   token:
     description: >
@@ -37,16 +34,16 @@ inputs:
   model:
     description: 'AI model to use for code review'
     required: true
-    default: 'gemma2:2b'
+    default: 'gpt-4.1'
   host:
-    description: 'ollama host'
+    description: 'openai base url'
     required: true
-    default: 'http://127.0.0.1:11434'
+    default: 'https://api.openai.com'
   PROMPT_GENRE:
     description: 'prompt genre'
     default: ' '
   reviewers_prompt:
-    description: 'ollama system prompt'
+    description: 'system prompt'
     required: false
     default: ""
   ai_token:

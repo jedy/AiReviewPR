@@ -40,20 +40,22 @@ async function pushComments(message: string): Promise<any> {
 
 async function aiGenerate({host, token, prompt, model, system}: any): Promise<any> {
   const data = JSON.stringify({
-    prompt: prompt,
     model: model,
     stream: false,
-    system: system || system_prompt,
-    options: {
-      tfs_z: 1.5,
-      top_k: 30,
-      top_p: 0.8,
-      temperature: 0.7,
-      num_ctx: 10240,
-    }
+    max_completion_tokens: 10240,
+    messages: [
+      {
+        role: "system",
+        content: system || system_prompt,
+      },
+      {
+        role: "user",
+        content: prompt,
+      }
+    ],
   });
   return await post({
-    url: `${host}/api/generate`,
+    url: `${host}/v1/chat/completions`,
     body: data,
     header: {'Authorization': token ? `Bearer ${token}` : "",}
   })
@@ -135,14 +137,11 @@ async function aiCheckDiffContext() {
           model: model,
           system: process.env.INPUT_REVIEW_PROMPT
         })
-        if (response.detail) { // noinspection ExceptionCaughtLocallyJS
-          throw response.detail;
-        }
-        if (!response.response) { // noinspection ExceptionCaughtLocallyJS
-          throw "ollama error";
+        if (!response.choices) { // noinspection ExceptionCaughtLocallyJS
+          throw "openai error";
         }
         let Review = useChinese ? "审核结果" : "Review";
-        let commit: string = response.response;
+        let commit: string = response.choices[0].message.content;
         if (commit.indexOf("```markdown") === 0) {
           commit = commit.substring("```markdown".length);
           if (commit.lastIndexOf("```") === commit.length - 3) {
