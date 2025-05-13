@@ -34,7 +34,7 @@ on:
 
 jobs:
   review:
-    name: Review PR
+    name: Review Pull Request
     runs-on: ubuntu-latest
 
     steps:
@@ -43,15 +43,14 @@ jobs:
         with:
           fetch-depth: 0
       - name: Review code
-        uses: kekxv/AiReviewPR@v0.0.5
+        uses: jedy/AiReviewPR@v1.0.4
         with:
-          model: 'gemma2:2b'
-          host: ${{ vars.OLLAMA_HOST }}
+          model: 'gpt-4.1'
+          host: ${{ vars.OPENAI_BASE_URL }}
           ai_token: ${{ secrets.AI_TOKEN }}
-          REVIEW_PULL_REQUEST: false
+          REVIEW_PULL_REQUEST: true
           exclude_files: |
             ^.+\.md
-            test2\.js
 ```
 
 效果如下：
