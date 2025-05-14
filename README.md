@@ -1,14 +1,14 @@
-# 基于 Gitea 和 Ollama (open-webui) 的代码合并自动检查
+# 基于 Gitea 和 OpenAI 的代码合并自动检查
 
 如果您需要对合并的代码进行审核，但又希望避免将代码发送给第三方，或者您的网络环境处于离线状态（无法连接到第三方平台），那么本项目将是一个理想的选择。
 
-该项目结合了 Gitea 和 Ollama (open-webui)，能够自动审核合并代码，并将结果通过评论的形式推送到相应的合并请求中，供开发人员或审核人员参考使用。
+该项目结合了 Gitea 和 OpenAI，能够自动审核合并代码，并将结果通过评论的形式推送到相应的合并请求中，供开发人员或审核人员参考使用。
 
-# Automatic Code Merge Checks Based on Gitea and Ollama (open-webui)
+# Automatic Code Merge Checks Based on Gitea and OpenAI
 
 If you need to review your merged code but prefer not to send it to a third party, or if your network environment is offline (unable to connect to third-party platforms), then this project is an ideal choice.
 
-This project integrates Gitea and Ollama (open-webui) to automatically review merged code and push the results as comments to the corresponding merge requests, allowing developers or reviewers to reference them.
+This project integrates Gitea and OpenAI to automatically review merged code and push the results as comments to the corresponding merge requests, allowing developers or reviewers to reference them.
 
 
 - [如何使用 How to use](#如何使用-How-to-use)
@@ -21,9 +21,9 @@ This project integrates Gitea and Ollama (open-webui) to automatically review me
 
 The usage is similar to regular GitHub Actions (Gitea Actions are mostly compatible with GitHub Actions).
 
-需要设置一个 ollama host，如果使用的是 open-webui ，建议加上授权token。
+需要设置 OpenAI 的 API 地址和授权token。
 
-You need to set up an Ollama host, and if you are using open-webui, it is recommended to include an authorization token.
+You need to set up the OpenAI API endpoint and authorization token.
 
 ```yaml
 name: ai-reviews
@@ -43,7 +43,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Review code
-        uses: jedy/AiReviewPR@v1.0.4
+        uses: jedy/AiReviewPR@v1.0.6
         with:
           model: 'gpt-4.1'
           host: ${{ vars.OPENAI_BASE_URL }}
@@ -60,11 +60,6 @@ result：
 ![actions.run.png](assets/actions.run.png)
 ![review.comments.1.png](assets/review.comments.1.png)
 ![review.comments.2.png](assets/review.comments.2.png)
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=kekxv/AiReviewPR&type=Date)](https://star-history.com/#kekxv/AiReviewPR&Date)
-
 
 ## 输入参数
 
@@ -100,21 +95,21 @@ result：
   - **默认值**: `${{ github.token }}`。
 
 8. **model**
-  - **描述**: 用于代码审核的 AI 模型。
+  - **描述**: 用于代码审核的 OpenAI 模型。
   - **必需**: 是。
-  - **默认值**: `'gemma2:2b'`。
+  - **默认值**: `'gpt-4.1'`。
 
 9. **host**
-  - **描述**: Ollama 主机地址。
+  - **描述**: OpenAI API 地址。
   - **必需**: 是。
-  - **默认值**: `'http://127.0.0.1:11434'`。
+  - **默认值**: `'https://api.openai.com'`。
 
 10. **PROMPT_GENRE**
   - **描述**: 提示生成的类型。
   - **默认值**: `' '`（空格）。
 
 11. **reviewers_prompt**
-  - **描述**: Ollama 系统提示信息。
+  - **描述**: OpenAI 系统提示信息。
   - **必需**: 否。
   - **默认值**: `""`（空字符串）。
 
@@ -170,19 +165,19 @@ result：
 8. **model**
   - **Description**: AI model to use for code review.
   - **Required**: Yes.
-  - **Default Value**: `'gemma2:2b'`.
+  - **Default Value**: `'gpt-4.1'`.
 
 9. **host**
-  - **Description**: Ollama host address.
+  - **Description**: openai base url.
   - **Required**: Yes.
-  - **Default Value**: `'http://127.0.0.1:11434'`.
+  - **Default Value**: `'https://api.openai.com'`.
 
 10. **PROMPT_GENRE**
   - **Description**: The genre of the prompt to generate.
   - **Default Value**: `' '` (space).
 
 11. **reviewers_prompt**
-  - **Description**: Ollama system prompt.
+  - **Description**: system prompt.
   - **Required**: No.
   - **Default Value**: `""` (empty string).
 
